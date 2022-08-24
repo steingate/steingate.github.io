@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="@[toc]##题目You have a revolver gun with a cylinder that has n chambers. Chambers are located in a circle on acylinder. Each chamber can be empty or can contain a round. One chamber is aligned with the">
+  <meta name="description" content="文章目录 ##题目 You have a revolver gun with a cylinder that has n chambers. Chambers are located in a circle on a cylinder. Each chamber can be empty or can contain a round. One chamber is aligned with the">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SteinGate&#39;s Blog">
 <meta property="og:url" content="http://example.com/2022/08/24/Headshot/index.html">
 <meta property="og:site_name" content="SteinGate&#39;s Blog">
-<meta property="og:description" content="@[toc]##题目You have a revolver gun with a cylinder that has n chambers. Chambers are located in a circle on acylinder. Each chamber can be empty or can contain a round. One chamber is aligned with the">
+<meta property="og:description" content="文章目录 ##题目 You have a revolver gun with a cylinder that has n chambers. Chambers are located in a circle on a cylinder. Each chamber can be empty or can contain a round. One chamber is aligned with the">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdn.net/20180601135415703?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4OTYxMTI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="article:published_time" content="2022-08-24T02:47:55.145Z">
-<meta property="article:modified_time" content="2022-08-24T02:47:55.576Z">
+<meta property="article:published_time" content="2022-08-24T02:53:25.350Z">
+<meta property="article:modified_time" content="2022-08-24T02:53:25.793Z">
 <meta property="article:author" content="SteinGate">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20180601135415703?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4OTYxMTI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
@@ -175,7 +175,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-08-24 10:47:55" itemprop="dateCreated datePublished" datetime="2022-08-24T10:47:55+08:00">2022-08-24</time>
+              <time title="创建时间：2022-08-24 10:53:25" itemprop="dateCreated datePublished" datetime="2022-08-24T10:53:25+08:00">2022-08-24</time>
             </span>
 
           
@@ -189,10 +189,75 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>@[toc]<br>##题目<br>You have a revolver gun with a cylinder that has n chambers. Chambers are located in a circle on a<br>cylinder. Each chamber can be empty or can contain a round. One chamber is aligned with the gun’sbarrel. When trigger of the gun is pulled, the gun’s cylinder rotates, aligning the next chamber with the barrel, hammer strikes the round, making a shot by firing a bullet through the barrel. If the chamber is empty when the hammer strikes it, then there is no shot but just a “click”.<br><img src="https://img-blog.csdn.net/20180601135415703?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4OTYxMTI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>You have found a use for this gun. You are playing Russian Roulette with your friend. Your friend<br>loads rounds into some chambers, randomly rotates the cylinder, aligning a random chamber with a<br>gun’s barrel, puts the gun to his head and pulls the trigger. You hear “click” and nothing else — the<br>chamber was empty and the gun did not shoot.<br>Now it is your turn to put the gun to your head and pull the trigger. You have a choice. You<br>can either pull the trigger right away or you can randomly rotate the gun’s cylinder and then pull the<br>trigger. What should you choose to maximize the chances of your survival?<br>###Input<br>The input file contains several datasets. A dataset consists of a single line with a string of n digits ‘0’<br>and ‘1’ (2 ≤ n ≤ 100). This line of digits represents the pattern of rounds that were loaded into the<br>gun’s chambers. ‘0’ represent an empty chamber, ‘1’ represent a loaded one. In this representation,<br>when cylinder rotates before a shot, the next chamber to the right gets aligned with the barrel for a<br>shot. Since the chambers are actually located on a circle, the first chamber in this string follows the<br>last one. There is at least one ‘0’ in this string.<br>###Output<br>For each dataset, write to the output file one of the following words (without quotes):<br>• ‘SHOOT’ — if pulling the trigger right away makes you less likely to be actually shot in the head<br>with the bullet (more likely that the chamber will be empty).<br>• ‘ROTATE’ — if randomly rotating the cylinder before pulling the trigger makes you less likely to<br>be actually shot in the head with the bullet (more likely that the chamber will be empty).<br>• ‘EQUAL’ — if both of the above choices are equal in terms of probability of being shot.<br>###Sample Input<br>0011<br>0111<br>000111<br>###Sample Output<br>EQUAL<br>ROTATE<br>SHOOT<br>##题意<br>你跟人决斗，用手枪向自己的脑袋开枪。另外一个人先开，是空枪。接着轮到了你，现在给你子弹序列。你需要编写程序决定是先转一下还是直接开枪生还的可能大（可以旋转到任意位置，且开枪之后会自动转到下一格）<br>##思路<br>设连续两个空弹的个数为E1，空弹的个数为E2，子弹的个数为len<br>首先我们想，如果直接开枪的话，有两个连续空弹的可能是多少呢？<br>另一个人拿到的空弹是是E2颗弹中的一个，也就是E2&#x2F;1<br>那么连续两个都是空弹的概率就是<br>$$E1&#x2F;E2$$</p>
-<p>转一下的概率比较好想，就是<br>$$E2&#x2F;len$$</p>
+        <p></p><div class="toc"><h3>文章目录</h3><br>
+##题目<br>
+You have a revolver gun with a cylinder that has n chambers. Chambers are located in a circle on a<br>
+cylinder. Each chamber can be empty or can contain a round. One chamber is aligned with the gun’sbarrel. When trigger of the gun is pulled, the gun’s cylinder rotates, aligning the next chamber with the barrel, hammer strikes the round, making a shot by firing a bullet through the barrel. If the chamber is empty when the hammer strikes it, then there is no shot but just a “click”.<br>
+<img src="https://img-blog.csdn.net/20180601135415703?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4OTYxMTI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>
+You have found a use for this gun. You are playing Russian Roulette with your friend. Your friend<br>
+loads rounds into some chambers, randomly rotates the cylinder, aligning a random chamber with a<br>
+gun’s barrel, puts the gun to his head and pulls the trigger. You hear “click” and nothing else — the<br>
+chamber was empty and the gun did not shoot.<br>
+Now it is your turn to put the gun to your head and pull the trigger. You have a choice. You<br>
+can either pull the trigger right away or you can randomly rotate the gun’s cylinder and then pull the<br>
+trigger. What should you choose to maximize the chances of your survival?<br>
+###Input<br>
+The input file contains several datasets. A dataset consists of a single line with a string of n digits ‘0’<br>
+and ‘1’ (2 ≤ n ≤ 100). This line of digits represents the pattern of rounds that were loaded into the<br>
+gun’s chambers. ‘0’ represent an empty chamber, ‘1’ represent a loaded one. In this representation,<br>
+when cylinder rotates before a shot, the next chamber to the right gets aligned with the barrel for a<br>
+shot. Since the chambers are actually located on a circle, the first chamber in this string follows the<br>
+last one. There is at least one ‘0’ in this string.<br>
+###Output<br>
+For each dataset, write to the output file one of the following words (without quotes):<br>
+• ‘SHOOT’ — if pulling the trigger right away makes you less likely to be actually shot in the head<br>
+with the bullet (more likely that the chamber will be empty).<br>
+• ‘ROTATE’ — if randomly rotating the cylinder before pulling the trigger makes you less likely to<br>
+be actually shot in the head with the bullet (more likely that the chamber will be empty).<br>
+• ‘EQUAL’ — if both of the above choices are equal in terms of probability of being shot.<br>
+###Sample Input<br>
+0011<br>
+0111<br>
+000111<br>
+###Sample Output<br>
+EQUAL<br>
+ROTATE<br>
+SHOOT<br>
+##题意<br>
+你跟人决斗，用手枪向自己的脑袋开枪。另外一个人先开，是空枪。接着轮到了你，现在给你子弹序列。你需要编写程序决定是先转一下还是直接开枪生还的可能大（可以旋转到任意位置，且开枪之后会自动转到下一格）<br>
+##思路<br>
+设连续两个空弹的个数为E1，空弹的个数为E2，子弹的个数为len<br>
+首先我们想，如果直接开枪的话，有两个连续空弹的可能是多少呢？<br>
+另一个人拿到的空弹是是E2颗弹中的一个，也就是E2/1<br>
+那么连续两个都是空弹的概率就是<br>
+<span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mn>1</mn><mi mathvariant="normal">/</mi><mi>E</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">E1/E2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathnormal" style="margin-right: 0.0576em;">E</span><span class="mord">1/</span><span class="mord mathnormal" style="margin-right: 0.0576em;">E</span><span class="mord">2</span></span></span></span></span></span></div><p></p>
+<p>转一下的概率比较好想，就是<br>
+<span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mn>2</mn><mi mathvariant="normal">/</mi><mi>l</mi><mi>e</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">E2/len</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathnormal" style="margin-right: 0.0576em;">E</span><span class="mord">2/</span><span class="mord mathnormal" style="margin-right: 0.0197em;">l</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span></span></span></span></span></span></p>
 <p>##代码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">#define MAXN 100</span><br><span class="line">int main()&#123;</span><br><span class="line">	char G[2*MAXN+5];</span><br><span class="line">	while(~scanf(&quot;%s&quot;,G))&#123;</span><br><span class="line">		int len=strlen(G);</span><br><span class="line">		G[len]=G[0];</span><br><span class="line">		double E1=0.0,E2=0.0;</span><br><span class="line">		for(int i=0;i&lt;len;i++)&#123;</span><br><span class="line">			if(G[i]==&#x27;0&#x27;)&#123;</span><br><span class="line">				E1+=1.0;</span><br><span class="line">				if(G[i]==G[i+1])</span><br><span class="line">					E2+=1.0;		</span><br><span class="line">			&#125; </span><br><span class="line">		&#125;</span><br><span class="line">		double A1=E2/E1,A2=E1/len;</span><br><span class="line">		if(A1&gt;A2) printf(&quot;SHOOT\n&quot;);</span><br><span class="line">		else if(A1==A2) printf(&quot;EQUAL\n&quot;);</span><br><span class="line">		else printf(&quot;ROTATE\n&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+using namespace std;
+#define MAXN 100
+int main()&#123;
+	char G[2*MAXN+5];
+	while(~scanf("%s",G))&#123;
+		int len=strlen(G);
+		G[len]=G[0];
+		double E1=0.0,E2=0.0;
+		for(int i=0;i&lt;len;i++)&#123;
+			if(G[i]=='0')&#123;
+				E1+=1.0;
+				if(G[i]==G[i+1])
+					E2+=1.0;		
+			&#125; 
+		&#125;
+		double A1=E2/E1,A2=E1/len;
+		if(A1&gt;A2) printf("SHOOT\n");
+		else if(A1==A2) printf("EQUAL\n");
+		else printf("ROTATE\n");
+	&#125;
+&#125;
+</code></pre>
 
 
     </div>
@@ -264,6 +329,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">文章目录</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
