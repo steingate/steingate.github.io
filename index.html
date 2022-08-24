@@ -145,6 +145,203 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/24/%E6%97%85%E8%A1%8C%E5%AE%B6%E7%9A%84%E9%A2%84%E7%AE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="SteinGate">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SteinGate's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/24/%E6%97%85%E8%A1%8C%E5%AE%B6%E7%9A%84%E9%A2%84%E7%AE%97/" class="post-title-link" itemprop="url">旅行家</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-24 11:18:13 / 修改时间：11:18:30" itemprop="dateCreated datePublished" datetime="2022-08-24T11:18:13+08:00">2022-08-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>##题目<br />
+###题目描述<br />
+一个旅行家想驾驶汽车以最少的费用从一个城市到另一个城市(假设出发时油箱是空的)。给定两个城市之间的距离d1、汽车油箱的容量c（以升为单位）、每升汽油能行驶的距离d2、出发点每升汽油价格p和沿途油站数n，油站i离出发点的距离d[i]、每升汽油价格p[i]。 计算结果四舍五入至小数点后两位。 如果无法到达目的地，则输出-1。<br />
+###输入<br />
+输入共n+1行，第一行为d1,c,d2,p,n，以下n行，每行两个数据，分别表示该油站距出发点的距离d[i]和该油站每升汽油的价格p[i]。两个数据之间用一个空格隔开。1 &lt;= n &lt;= 100<br />
+###输出<br />
+一行，输出最少费用。 计算结果四舍五入至小数点后两位。 如果无法到达目的地，则输出-1。<br />
+###样例输入</p>
+<p>275.6 11.9 27.4 2.8 2<br />
+102.0 2.9<br />
+220.0 2.2</p>
+<p>###样例输出</p>
+<p>26.95</p>
+<p>###分析<br />
+首先我们来解析一下题目，有以下几种情况：</p>
+<ol>
+<li>输出“-1”时，相邻两地间的距离&gt;油箱容积*每升油能走的距离</li>
+<li>如果在当前点能到达的油站中有p[i]&gt;p[now]的，就把油加到刚好能达到那个油站的程度</li>
+<li>如果上一个条件不成立，就把油箱加满，开到能达到的油站中最便宜的那个去</li>
+</ol>
+<p>（想一想：贪心策略的证明）</p>
+<hr />
+<p>证明<br />
+1：很简单，基本上都能想到<br />
+2：如果要到达点Q，在需要钱数更小的情况下，显然应该让在现在所在的油站加的油尽量少，而在下一个较便宜的油站加的多一点<br />
+3 : 基本上都能想到</p>
+<p>###代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct node </span><br><span class="line">&#123;</span><br><span class="line">	double away/*离起点的距离*/,spend/*当前油站油的价格*/;</span><br><span class="line">&#125;;</span><br><span class="line">node way[105];</span><br><span class="line">double to_last,V,can,first_spend;</span><br><span class="line">int n;</span><br><span class="line">bool cmp(const node&amp; x,const node&amp; y)//将路程按从小到大排序</span><br><span class="line">&#123;</span><br><span class="line">	if(x.away==y.away)</span><br><span class="line">		return x.spend&lt;y.spend;</span><br><span class="line">	return x.away&lt;y.away;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	scanf(&quot;%lf %lf %lf %lf %d&quot;,&amp;to_last,&amp;V,&amp;can,&amp;first_spend,&amp;n);</span><br><span class="line">	way[n+1].away=to_last/can;way[0].spend=first_spend;</span><br><span class="line">	for(int i=1;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		scanf(&quot;%lf %lf&quot;,&amp;way[i].away,&amp;way[i].spend);</span><br><span class="line">		way[i].away/=can;//预处理：走完这段路程需要多少汽油</span><br><span class="line">	&#125;</span><br><span class="line">	sort(way+0,way+n+2,cmp);</span><br><span class="line">	int now=0;//现在所在的油站</span><br><span class="line">	double nowV=0/*现在的油量*/,sum=0/*需要的钱数*/;</span><br><span class="line">	while(now&lt;=n)</span><br><span class="line">	&#123;</span><br><span class="line">		if(way[now+1].away-way[now].away&gt;V)//如果这段路程&gt;加满油后能走的</span><br><span class="line">		&#123;</span><br><span class="line">			printf(&quot;-1&quot;);</span><br><span class="line">			return 0;</span><br><span class="line">		&#125;</span><br><span class="line">		int flag=now+1,flag1=0/*第一个比当前油站价格小的油站编号*/;</span><br><span class="line">		for(int i=now+1;i&lt;=n;i++)</span><br><span class="line">			if(way[i].away-way[now].away&lt;=V)//如果能到达</span><br><span class="line">			&#123;</span><br><span class="line">				if(!flag1&amp;&amp;way[i].spend&lt;way[now].spend)//如果是第一个比当前油站价格小的油站</span><br><span class="line">					flag1=i;</span><br><span class="line">				if(way[flag].spend&gt;way[i].spend)//寻找最低的油价</span><br><span class="line">				&#123;</span><br><span class="line">					flag=i;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			else</span><br><span class="line">				break;</span><br><span class="line">		if(flag1)//如果有油站比当前油站价格低</span><br><span class="line">			if(nowV&gt;way[flag1].away-way[now].away)//油箱油足够的情况</span><br><span class="line">			&#123;</span><br><span class="line">				nowV-=way[flag1].away-way[now].away;</span><br><span class="line">				now=flag1;</span><br><span class="line">			&#125;</span><br><span class="line">			else</span><br><span class="line">			&#123;</span><br><span class="line">				sum+=(way[flag1].away-way[now].away-nowV)*way[now].spend;</span><br><span class="line">				nowV=0;</span><br><span class="line">				now=flag1;</span><br><span class="line">			&#125;</span><br><span class="line">		else </span><br><span class="line">			if(V&gt;=way[n+1].away-way[now].away)//如果能直接开到终点</span><br><span class="line">				if(nowV&gt;=way[n+1].away-way[now].away)//现有油量够</span><br><span class="line">					now=n+1;</span><br><span class="line">				else</span><br><span class="line">				&#123;</span><br><span class="line">					sum+=(way[n+1].away-way[now].away-nowV)*way[now].spend;</span><br><span class="line">					now=n+1;</span><br><span class="line">				&#125;</span><br><span class="line">			else</span><br><span class="line">			&#123;</span><br><span class="line">				sum+=(V-nowV)*way[now].spend;</span><br><span class="line">				nowV=V-(way[flag].away-way[now].away);</span><br><span class="line">				now=flag;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	if(sum)</span><br><span class="line">		printf(&quot;%.2lf\n&quot;,sum);</span><br><span class="line">	else</span><br><span class="line">		printf(&quot;-1&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/24/%E5%9F%BA%E6%9C%AC%E7%BA%BF%E6%AE%B5%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="SteinGate">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SteinGate's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/24/%E5%9F%BA%E6%9C%AC%E7%BA%BF%E6%AE%B5%E6%A0%91/" class="post-title-link" itemprop="url">线段树</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-24 11:17:33 / 修改时间：11:17:55" itemprop="dateCreated datePublished" datetime="2022-08-24T11:17:33+08:00">2022-08-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>前言<br />
+作为一个常用的数据结构，线段树怎能不与玄学扯上关系。所以今天要讲的是：玄学。<br />
+##基本概念<br />
+所谓线段树，就是将一个线段用数轴上的一个点表示。<br />
+但是我当初就没搞懂，所以我决定用我能理解的方法来讲。<br />
+想象有一条线，嗯对，一条线段。<br />
+将这条线段从中点分开，中点归左边。<br />
+就这样递归，递归，递归。<br />
+直到线段长度为1时，return；<br />
+好，这就是建树的过程。<br />
+那你肯定要问，凭什么要这样写。<br />
+别急，下面为你详细解答。</p>
+<hr />
+<p>以下为重点部分：<br />
+我们都知道，数轴上的区间覆盖处理一直是个巨坑，一个不小心就超时。<br />
+所以我们想出了线段树这种辅助结构。<br />
+我们要找一个长度为1的线段时，如果用线段树，时间复杂度会是多少呢？<br />
+答案是:$$O(\log n)$$<br />
+我们来分析一下：<br />
+<strong>每一次递归后，待查询线段的长度就成了父亲线段长度的½</strong><br />
+所以线段树真的是一个很高效的数据结构（某些情况下）</p>
+<hr />
+<p>##实现</p>
+<p><em>声明：全部代码将用C++语言完成</em></p>
+<p>我们用结构体来存储这棵树</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">struct node&#123;</span><br><span class="line">	int l,r;</span><br><span class="line">&#125;tree[6*MAXN+5];</span><br></pre></td></tr></table></figure>
+<p><em>不知为何，我用4</em>MAXN时总会RE*</p>
+<p>先来建树部分的代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void Build(int number,int left,int right)&#123;</span><br><span class="line">	tree[number].l=left;</span><br><span class="line">	tree[number].r=right;</span><br><span class="line">	if(l==r）  //长度为1时</span><br><span class="line">		return;</span><br><span class="line">	int mid=(l+r)/2;</span><br><span class="line">	Build(number*2,left,mid);   //建左子树</span><br><span class="line">	Build(number*2+1,mid+1,right);  //建右子树</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后是查找部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">void Find（int number,int left,int right)&#123;</span><br><span class="line">	if(tree[number].l==left&amp;&amp;tree[number].r==right)&#123;  //如果找到了的话</span><br><span class="line">		printf(&quot;Find it!&quot;);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	// 这里并不是我偷懒，而是有问题要讨论</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这里我们发现了一个问题——有两种实现方式，分别是：</p>
+<ol>
+<li>严谨认真，将左右端点依次与中点进行比较。</li>
+<li>不管了，直接上，到时候不行再倒回来。</li>
+</ol>
+<p>那么大家觉得哪个是对的呢？猜一猜</p>
+<hr />
+<p>选1的请举手，恭喜你，你是对的<br />
+但是，它们两个都是对的，时间复杂度也没有什么区别。<br />
+而且2码起来还要简单一些。<br />
+所以说。。。</p>
+<p>选2的请举手<br />
+原来你是大佬啊。<s>虽然可能是蒙的</s></p>
+<hr />
+<p>所以说，讲了一大通废话，也是时候该上代码了。<br />
+我也准备了两种代码，随大家喜好咯</p>
+<p>方法1：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">void Find（int number,int left,int right)&#123;</span><br><span class="line">	if(tree[number].l==left&amp;&amp;tree[number].r==right)  </span><br><span class="line">		return 1;</span><br><span class="line">	int mid=(tree[number].l+tree[number].r)/2;</span><br><span class="line">	if(r&lt;=mid) </span><br><span class="line">		return Find(number*2,left,right);</span><br><span class="line">	else if(l&gt;mid)</span><br><span class="line">		return Find(number*2+1,left,right);</span><br><span class="line">	else return max(Find(number*2,left,mid),Find(number*2+1,mid+1,right));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法2：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void Find（int number,int left,int right)&#123;</span><br><span class="line">	if(tree[number].l==left&amp;&amp;tree[number].r==right)  </span><br><span class="line">		return 1;</span><br><span class="line">	if(tree[number].l&gt;right||tree[number].r&lt;left)</span><br><span class="line">		return 0;</span><br><span class="line">	int mid=(tree[number].l+tree[number].r)/2;</span><br><span class="line">	return max(Find(number*2,left,mid),Find(number*2+1,mid+1,right));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>未完待续。。。<br />
+请关注下一篇<a target="_blank" rel="noopener" href="http://blog.csdn.net/qq_38961124/article/details/79354327">进击的线段树——RMQ</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/24/%E8%BF%9B%E5%87%BB%E7%9A%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E2%80%94%E2%80%94RMQ/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -159,7 +356,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/08/24/%E8%BF%9B%E5%87%BB%E7%9A%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E2%80%94%E2%80%94RMQ/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2022/08/24/%E8%BF%9B%E5%87%BB%E7%9A%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E2%80%94%E2%80%94RMQ/" class="post-title-link" itemprop="url">RMQ</a>
         </h2>
 
         <div class="post-meta">
@@ -170,7 +367,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-08-24 11:07:08 / 修改时间：11:07:45" itemprop="dateCreated datePublished" datetime="2022-08-24T11:07:08+08:00">2022-08-24</time>
+              <time title="创建时间：2022-08-24 11:07:08 / 修改时间：11:16:58" itemprop="dateCreated datePublished" datetime="2022-08-24T11:07:08+08:00">2022-08-24</time>
             </span>
 
           
@@ -261,7 +458,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-08-24 11:01:29 / 修改时间：11:15:15" itemprop="dateCreated datePublished" datetime="2022-08-24T11:01:29+08:00">2022-08-24</time>
+              <time title="创建时间：2022-08-24 11:01:29 / 修改时间：11:16:35" itemprop="dateCreated datePublished" datetime="2022-08-24T11:01:29+08:00">2022-08-24</time>
             </span>
 
           
@@ -348,7 +545,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/08/24/%E5%BB%BA%E9%80%A0%E5%9F%BA%E5%9C%B0/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2022/08/24/%E5%BB%BA%E9%80%A0%E5%9F%BA%E5%9C%B0/" class="post-title-link" itemprop="url">建造基地</a>
         </h2>
 
         <div class="post-meta">
@@ -359,7 +556,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-08-24 10:57:53 / 修改时间：10:58:31" itemprop="dateCreated datePublished" datetime="2022-08-24T10:57:53+08:00">2022-08-24</time>
+              <time title="创建时间：2022-08-24 10:57:53 / 修改时间：11:16:48" itemprop="dateCreated datePublished" datetime="2022-08-24T10:57:53+08:00">2022-08-24</time>
             </span>
 
           
@@ -439,7 +636,7 @@ No Answer<br />
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/08/24/%E6%A3%8B%E7%9B%98%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2022/08/24/%E6%A3%8B%E7%9B%98%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">棋盘问题</a>
         </h2>
 
         <div class="post-meta">
@@ -450,7 +647,7 @@ No Answer<br />
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-08-24 10:47:23 / 修改时间：11:03:07" itemprop="dateCreated datePublished" datetime="2022-08-24T10:47:23+08:00">2022-08-24</time>
+              <time title="创建时间：2022-08-24 10:47:23 / 修改时间：11:17:10" itemprop="dateCreated datePublished" datetime="2022-08-24T10:47:23+08:00">2022-08-24</time>
             </span>
 
           
@@ -560,7 +757,7 @@ No Answer<br />
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

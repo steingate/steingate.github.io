@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="##题目 ###题目描述 一个旅行家想驾驶汽车以最少的费用从一个城市到另一个城市(假设出发时油箱是空的)。给定两个城市之间的距离d1、汽车油箱的容量c（以升为单位）、每升汽油能行驶的距离d2、出发点每升汽油价格p和沿途油站数n，油站i离出发点的距离d[i]、每升汽油价格p[i]。 计算结果四舍五入至小数点后两位。 如果无法到达目的地，则输出-1。 ###输入 输入共n+1行，第一行为d1,c,d2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="旅行家">
+<meta property="og:url" content="http://example.com/2022/08/24/%E6%97%85%E8%A1%8C%E5%AE%B6%E7%9A%84%E9%A2%84%E7%AE%97/index.html">
+<meta property="og:site_name" content="SteinGate&#39;s Blog">
+<meta property="og:description" content="##题目 ###题目描述 一个旅行家想驾驶汽车以最少的费用从一个城市到另一个城市(假设出发时油箱是空的)。给定两个城市之间的距离d1、汽车油箱的容量c（以升为单位）、每升汽油能行驶的距离d2、出发点每升汽油价格p和沿途油站数n，油站i离出发点的距离d[i]、每升汽油价格p[i]。 计算结果四舍五入至小数点后两位。 如果无法到达目的地，则输出-1。 ###输入 输入共n+1行，第一行为d1,c,d2">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-24T03:18:13.907Z">
+<meta property="article:modified_time" content="2022-08-24T03:18:30.804Z">
+<meta property="article:author" content="SteinGate">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/08/24/%E6%97%85%E8%A1%8C%E5%AE%B6%E7%9A%84%E9%A2%84%E7%AE%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>旅行家 | SteinGate's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">SteinGate's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/24/%E6%97%85%E8%A1%8C%E5%AE%B6%E7%9A%84%E9%A2%84%E7%AE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="SteinGate">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SteinGate's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          旅行家
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-24 11:18:13 / 修改时间：11:18:30" itemprop="dateCreated datePublished" datetime="2022-08-24T11:18:13+08:00">2022-08-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>##题目<br />
+###题目描述<br />
+一个旅行家想驾驶汽车以最少的费用从一个城市到另一个城市(假设出发时油箱是空的)。给定两个城市之间的距离d1、汽车油箱的容量c（以升为单位）、每升汽油能行驶的距离d2、出发点每升汽油价格p和沿途油站数n，油站i离出发点的距离d[i]、每升汽油价格p[i]。 计算结果四舍五入至小数点后两位。 如果无法到达目的地，则输出-1。<br />
+###输入<br />
+输入共n+1行，第一行为d1,c,d2,p,n，以下n行，每行两个数据，分别表示该油站距出发点的距离d[i]和该油站每升汽油的价格p[i]。两个数据之间用一个空格隔开。1 &lt;= n &lt;= 100<br />
+###输出<br />
+一行，输出最少费用。 计算结果四舍五入至小数点后两位。 如果无法到达目的地，则输出-1。<br />
+###样例输入</p>
+<p>275.6 11.9 27.4 2.8 2<br />
+102.0 2.9<br />
+220.0 2.2</p>
+<p>###样例输出</p>
+<p>26.95</p>
+<p>###分析<br />
+首先我们来解析一下题目，有以下几种情况：</p>
+<ol>
+<li>输出“-1”时，相邻两地间的距离&gt;油箱容积*每升油能走的距离</li>
+<li>如果在当前点能到达的油站中有p[i]&gt;p[now]的，就把油加到刚好能达到那个油站的程度</li>
+<li>如果上一个条件不成立，就把油箱加满，开到能达到的油站中最便宜的那个去</li>
+</ol>
+<p>（想一想：贪心策略的证明）</p>
+<hr />
+<p>证明<br />
+1：很简单，基本上都能想到<br />
+2：如果要到达点Q，在需要钱数更小的情况下，显然应该让在现在所在的油站加的油尽量少，而在下一个较便宜的油站加的多一点<br />
+3 : 基本上都能想到</p>
+<p>###代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct node </span><br><span class="line">&#123;</span><br><span class="line">	double away/*离起点的距离*/,spend/*当前油站油的价格*/;</span><br><span class="line">&#125;;</span><br><span class="line">node way[105];</span><br><span class="line">double to_last,V,can,first_spend;</span><br><span class="line">int n;</span><br><span class="line">bool cmp(const node&amp; x,const node&amp; y)//将路程按从小到大排序</span><br><span class="line">&#123;</span><br><span class="line">	if(x.away==y.away)</span><br><span class="line">		return x.spend&lt;y.spend;</span><br><span class="line">	return x.away&lt;y.away;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	scanf(&quot;%lf %lf %lf %lf %d&quot;,&amp;to_last,&amp;V,&amp;can,&amp;first_spend,&amp;n);</span><br><span class="line">	way[n+1].away=to_last/can;way[0].spend=first_spend;</span><br><span class="line">	for(int i=1;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		scanf(&quot;%lf %lf&quot;,&amp;way[i].away,&amp;way[i].spend);</span><br><span class="line">		way[i].away/=can;//预处理：走完这段路程需要多少汽油</span><br><span class="line">	&#125;</span><br><span class="line">	sort(way+0,way+n+2,cmp);</span><br><span class="line">	int now=0;//现在所在的油站</span><br><span class="line">	double nowV=0/*现在的油量*/,sum=0/*需要的钱数*/;</span><br><span class="line">	while(now&lt;=n)</span><br><span class="line">	&#123;</span><br><span class="line">		if(way[now+1].away-way[now].away&gt;V)//如果这段路程&gt;加满油后能走的</span><br><span class="line">		&#123;</span><br><span class="line">			printf(&quot;-1&quot;);</span><br><span class="line">			return 0;</span><br><span class="line">		&#125;</span><br><span class="line">		int flag=now+1,flag1=0/*第一个比当前油站价格小的油站编号*/;</span><br><span class="line">		for(int i=now+1;i&lt;=n;i++)</span><br><span class="line">			if(way[i].away-way[now].away&lt;=V)//如果能到达</span><br><span class="line">			&#123;</span><br><span class="line">				if(!flag1&amp;&amp;way[i].spend&lt;way[now].spend)//如果是第一个比当前油站价格小的油站</span><br><span class="line">					flag1=i;</span><br><span class="line">				if(way[flag].spend&gt;way[i].spend)//寻找最低的油价</span><br><span class="line">				&#123;</span><br><span class="line">					flag=i;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			else</span><br><span class="line">				break;</span><br><span class="line">		if(flag1)//如果有油站比当前油站价格低</span><br><span class="line">			if(nowV&gt;way[flag1].away-way[now].away)//油箱油足够的情况</span><br><span class="line">			&#123;</span><br><span class="line">				nowV-=way[flag1].away-way[now].away;</span><br><span class="line">				now=flag1;</span><br><span class="line">			&#125;</span><br><span class="line">			else</span><br><span class="line">			&#123;</span><br><span class="line">				sum+=(way[flag1].away-way[now].away-nowV)*way[now].spend;</span><br><span class="line">				nowV=0;</span><br><span class="line">				now=flag1;</span><br><span class="line">			&#125;</span><br><span class="line">		else </span><br><span class="line">			if(V&gt;=way[n+1].away-way[now].away)//如果能直接开到终点</span><br><span class="line">				if(nowV&gt;=way[n+1].away-way[now].away)//现有油量够</span><br><span class="line">					now=n+1;</span><br><span class="line">				else</span><br><span class="line">				&#123;</span><br><span class="line">					sum+=(way[n+1].away-way[now].away-nowV)*way[now].spend;</span><br><span class="line">					now=n+1;</span><br><span class="line">				&#125;</span><br><span class="line">			else</span><br><span class="line">			&#123;</span><br><span class="line">				sum+=(V-nowV)*way[now].spend;</span><br><span class="line">				nowV=V-(way[flag].away-way[now].away);</span><br><span class="line">				now=flag;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	if(sum)</span><br><span class="line">		printf(&quot;%.2lf\n&quot;,sum);</span><br><span class="line">	else</span><br><span class="line">		printf(&quot;-1&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/24/%E5%9F%BA%E6%9C%AC%E7%BA%BF%E6%AE%B5%E6%A0%91/" rel="prev" title="线段树">
+      <i class="fa fa-chevron-left"></i> 线段树
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">SteinGate</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SteinGate</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
