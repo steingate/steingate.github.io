@@ -145,6 +145,195 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/24/%E8%BF%9B%E5%87%BB%E7%9A%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E2%80%94%E2%80%94RMQ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="SteinGate">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SteinGate's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/24/%E8%BF%9B%E5%87%BB%E7%9A%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E2%80%94%E2%80%94RMQ/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-24 11:07:08 / 修改时间：11:07:45" itemprop="dateCreated datePublished" datetime="2022-08-24T11:07:08+08:00">2022-08-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>前言<br />
+嗯，今天要讲的是进阶玄学， 有请玄学大师小Hi,小Ho登场</p>
+<blockquote></blockquote>
+<p>“唔……那我先从线段树的定义说起吧：线段树其实本质就是用一棵树来维护一段区间上和某个子区间相关的值——例如区间和、区间最大最小值一类的。”小Ho说道：“它的具体做法是这样的，这棵树的根节点表示了整段区间，根节点的左儿子节点表示了这段区间的前半部分，根节点的右儿子节点表示了这段区间的后半部分——并以此类推，对于这棵树的每个节点，如果这个节点所表示的区间的长度大于1，则令其左儿子节点表示这段区间的前半部分，令其右儿子表示这段区间的后半部分。以一段长度为10的区间为例，我所建立出的线段树应该是这样子的。”<br />
+“画的还凑合，但是这样一棵树有什么用呢？”小Hi明知故问道。<br />
+“就以RMQ问题为例吧——RMQ问题要求的是求解一段区间中的最小值，那么我不妨效仿ST算法，先对一些可能会用到的区间求解这个最小值！而既然我要是用线段树来解决这个问题的，那么我不妨就将每一个节点对应的区间中的最小值都求解出来。”小Ho道。<br />
+“那我给你这样一组数据，你将这个预处理的结果给我计算一下？”小Hi又出难题。<br />
+“好啊！你这数据正好也只有10个位置，那么我便直接用这棵树了。”只见小Ho刷刷两笔便在之前绘下的二叉树上写下了每个节点对应的区间中的最小值：“事实上这样一步相当好计算，由于每个非叶子节点所对应的区间都正好由它的两个儿子节点所对应的区间拼凑而成——那么只需要像ST那样，这样一个节点所对应的区间中的最小值便是它的两个儿子节点所对应的区间中的最小值中更小的那一个。这样我只需要O(N)的时间复杂度就可以计算出这棵树来。”<br />
+小Hi点了点头，继续问道：“我算是明白了，但是你这样一棵树统计出来的区间比ST算法统计出来的区间要少了很多，你还能够使用很快的算法进行查询么？更何况还有修改呢？”<br />
+小Ho笑了笑：“我先从简单的说起吧——修改，当某个位置的商品的重量发生改变的时候，对应的，就是这棵树的某个叶子节点的值发生了变化——但是和ST算法不同，包含这个节点的区间，便只有这个节点的所有祖先节点，而这样的节点数量事实上是很少的——只有O(log(N))级别。也就是说，当一次修改操作发生的时候，我只需要改变数量在O(log(N))级别的节点的值就可以完成操作了，修改的时间复杂度是O(log(N))。”<br />
+小Hi道：“是这样没错~算你过关！但是呢，还是像我之前所说的，你是准备如何使用数量在O(N)级别的区间来应付所有的询问呢？”<br />
+小Ho的笑容仍未退去：“这个其实也很简单！我要做的事情其实就是——将一个询问的区间拆成若干个我已经计算出来的区间（在ST算法中是拆成了2个的区间），这样对于这些区间已经计算出的最小值求最小值的话，我就可以知道询问的整个区间中的最小值是多少了！”<br />
+“那你准备如何分解询问的区间呢？”小Hi问道。<br />
+小Ho思索了一会，道：“这个问题其实很简单！我从线段树的根开始，对于当前访问的线段树节点t, 设其对应的区间为[A, B], 如果询问的区间[l, r]完全处于前半段或者后半段——即r &lt;= (A + B)/2或者l &gt; (A + B) / 2，那么递归进入t对应的子节点进行处理（因为另一棵子树中显然不会有任何区间需要用到）。否则的话，则把询问区间分成2部分[l, (A + B) / 2]和[(A + B) / 2 + 1, r]，并且分别进入t的左右子树处理这两段询问区间（因为2棵子树中显然都有区间需要用到）！当然了，如果[A, B]正好覆盖了[l, r]的话，就可以直接返回之前计算的t这棵子树中的最小值了。还是之前那个例子，如果我要询问[3, 9]这段区间，我的最终结果会是这样的——橙色部分标注的区间。”<br />
+“首先[3, 9]分解成了[3, 5]和[6, 9]两个区间，而[3, 5]分解成了[3, 3]和[4, 5]——均没有必要继续分解，[6, 9]分解成了[6, 8]和[9, 9]——同样也没有必要继续分解了。每一步的分解都是必要的，所以这已经是最好的分解方法了。”<br />
+小Hi满意的点了点头，道：“听起来还不错？但是你这样分解的话，区间的个数你能保证么？万一很多怎么办？”<br />
+小Ho思索了一会，接着道：“不会的，除了第一次分解成2个区间的操作可能会将区间个数翻倍外，之后每一次分解的时候所处理的区间都肯定有一条边是和当前节点对应的重合的（即l=A或者r=B），也就是说即使再进行分解，分解出的两个区间中也一定会有一个区间是不需要再进行分解的，也就是区间的总数是在深度这个级别的，所以也是O(logN)的。”<br />
+“看来你还挺清楚的，那么要不你再总结一下，我就算你过关，然后我们就可以开始讲解后面的问题了~”<br />
+小Ho道：“好的！首先我会根据初始数据，使用O(N)的时间构建一棵最原始的线段树，这个过程中我会使用子节点的值来计算父亲节点的值，从而避免冗余计算。然后对于每一次操作，如果是一次修改的话，我就将修改的节点和这个节点的所有祖先节点的值都进行更新，可以用O(logN)的时间复杂度完成。而如果是一次询问的话，我会使用上面描述的方法来对询问区间进行分解，这样虽然不像ST算法那样是O(1)，但是却实现了上一次所提到的‘平衡’，无论是修改还是查询的时间复杂度都是O(logN)的，所以我这个算法最终的时间复杂度会是O(N + Q * log(N))，在这个数据规模下是绰绰有余的！”<br />
+“嗯~ o(<em>￣▽￣</em>)o 不错哟~那么就到这里吧！”小Hi笑容满满道：“赶紧去吃早饭吧！”</p>
+<p>算法<br />
+看完HiHO大师的讲解，相信大家都已经懂了一点了吧。那么，蒟蒻不才，要接着上面的博客开始讲解了。<br />
+（上一篇：<a target="_blank" rel="noopener" href="http://blog.csdn.net/qq_38961124/article/details/79354107">基本线段树</a>）<br />
+首先，我们在结构体中加入&quot;minn”变量，用来存储线段中的最小值。<br />
+每一次插入线段后，都要更新minn的值。</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>r</mi><mi>e</mi><mi>e</mi><mo stretchy="false">[</mo><mi>n</mi><mi>u</mi><mi>m</mi><mi>b</mi><mi>e</mi><mi>r</mi><mo stretchy="false">]</mo><mi mathvariant="normal">.</mi><mi>m</mi><mi>i</mi><mi>n</mi><mi>n</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>n</mi><mo stretchy="false">(</mo><mi>t</mi><mi>r</mi><mi>e</mi><mi>e</mi><mo stretchy="false">[</mo><mi>n</mi><mi>u</mi><mi>m</mi><mi>b</mi><mi>e</mi><mi>r</mi><mo>∗</mo><mn>2</mn><mo stretchy="false">]</mo><mi mathvariant="normal">.</mi><mi>m</mi><mi>i</mi><mi>n</mi><mi>n</mi><mo separator="true">,</mo><mi>t</mi><mi>r</mi><mi>e</mi><mi>e</mi><mo stretchy="false">[</mo><mi>n</mi><mi>u</mi><mi>m</mi><mi>b</mi><mi>e</mi><mi>r</mi><mo>∗</mo><mn>2</mn><mo>+</mo><mn>1</mn><mo stretchy="false">]</mo><mi mathvariant="normal">.</mi><mi>m</mi><mi>i</mi><mi>n</mi><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">tree[number].minn=min(tree[number*2].minn,tree[number*2+1].minn)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">e</span><span class="mopen">[</span><span class="mord mathdefault">n</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span><span class="mord">.</span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">e</span><span class="mopen">[</span><span class="mord mathdefault">n</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mclose">]</span><span class="mord">.</span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">e</span><span class="mopen">[</span><span class="mord mathdefault">n</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mord">.</span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span></p>
+<p>就这么简单，完啦。</p>
+<p>实现<br />
+这些是RMQ的读入+传值部分代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void Insert(int i,int ad,int val)&#123;</span><br><span class="line">	if(tree[i].l&gt;ad||tree[i].r&lt;ad) return;</span><br><span class="line">	if(tree[i].l==tree[i].r)&#123;</span><br><span class="line">		tree[i].minn=val;</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	Insert(i*2,ad,val);</span><br><span class="line">	Insert(i*2+1,ad,val);</span><br><span class="line">	tree[i].minn=min(tree[i*2].minn,tree[i*2+1].minn);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这里是RMQ的核心查找部分代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int Find(int i,int l,int r)&#123;</span><br><span class="line">	if(r&lt;tree[i].l||l&gt;tree[i].r)//如果线段不能配对（这里用的方法2）</span><br><span class="line">		return 10000000;</span><br><span class="line">	if(l&lt;=tree[i].l&amp;&amp;tree[i].r&lt;=r)//如果这个是匹配线段</span><br><span class="line">		return tree[i].minn;</span><br><span class="line">	return min(Find(2*i,l,r),Find(2*i+1,l,r));//如果这条线段包含目标线段</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/24/CQOI-1634%20%E5%A4%96%E6%98%9F%E4%BA%BA%E5%85%A5%E4%BE%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="SteinGate">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SteinGate's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/24/CQOI-1634%20%E5%A4%96%E6%98%9F%E4%BA%BA%E5%85%A5%E4%BE%B5/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-24 11:01:29 / 修改时间：11:01:58" itemprop="dateCreated datePublished" datetime="2022-08-24T11:01:29+08:00">2022-08-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>题目<br />
+题目描述<br />
+外星人入侵地球。可怕的吃人外星人正在全国各地依次序建立它们的基地。<br />
+全国共有N(1≤ N ≤10,000)座城市，城市编号1～N。城市之间有M(0≤ M ≤100,000)条双向道路相连。外星人计划建立A(0≤A≤N)个基地。<br />
+你只有在距离当前所有外星人基地至少K(1≤K≤100)单位长度的城市才能得到安全。</p>
+<p>所以你必须赶快写一个程序决定走到哪里去。</p>
+<p>输入<br />
+第1行：4个整数N, M, A, K<br />
+接下来M行，每行3个整数T1, T2(1≤T1&lt;T2≤N)和D(1≤D≤100)，表示城市T1与T2之间有一条长度为D的道路。两个城市之间最多有一条直连道路。<br />
+接下来A行，每行1个整数Bi(1≤Bi≤N)，表示外星人依次序建的第i个基地所在的城市编号。</p>
+<p>输出<br />
+共A行，第i行1个整数，表示当外星人建好第i个基地后，距离当前所有基地B1,B2,…,Bi至少K长度的城市的数量。</p>
+<p>样例输入<br />
+7 6 3 3<br />
+1 2 1<br />
+1 3 1<br />
+2 5 1<br />
+3 6 1<br />
+1 4 1<br />
+4 7 2<br />
+2<br />
+1<br />
+4<br />
+样例输出<br />
+2<br />
+1<br />
+0</p>
+<p>分析<br />
+首先我们想，当一个城市被外星人占领之后，我们就应该将与这个城市相隔不超过K的城市全部做上记号（我在这里用的set，存被威胁的所有城市）<br />
+那么就用DFS吧，又快，写起来还简单</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void Dfs(int x,int val)&#123;</span><br><span class="line">	if(val&lt;k) ans.insert(x);</span><br><span class="line">	for(int i=0;i&lt;edge[x].size();i++)//这道题用邻接矩阵是会炸的</span><br><span class="line">		if((val+edge[x][i].first)&lt;k)</span><br><span class="line">			Dfs(edge[x][i].second,val+edge[x][i].first);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是就这样写了过后，却会TLE<br />
+<img src="https://img-blog.csdn.net/20180323140227610?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4OTYxMTI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="TLE截图" /><br />
+原因在哪呢？<br />
+当我们访问一个点时，如果这个点已经被访问过了，且前面的人（外星）在到达这个点后能走的路程比当前这个外星人还要长，那这一次的DFS到这里就可以结束了，而不需要再继续往下走。<br />
+所以我们加入一个T数组，作用是记录从这个点出发最多能走多远</p>
+<h2 id="-code1-"><a class="markdownIt-Anchor" href="#-code1-"></a> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if(go[x]&gt;=k-val) return;</span><br><span class="line">    else go[x]=k-val;</span><br></pre></td></tr></table></figure></h2>
+<p>这样就完成了<br />
+代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;set&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">#define MAXN 10000</span><br><span class="line">int n,m,a,k,go[MAXN+5];</span><br><span class="line">set &lt;int&gt; ans;</span><br><span class="line">vector &lt; pair&lt;int,int&gt; &gt; edge[MAXN+5];</span><br><span class="line">void Dfs(int x,int val)&#123;</span><br><span class="line">    if(val&lt;k) ans.insert(x);</span><br><span class="line">    if(go[x]&gt;=k-val) return;</span><br><span class="line">    else go[x]=k-val;</span><br><span class="line">    for(int i=0;i&lt;edge[x].size();i++)</span><br><span class="line">        if((val+edge[x][i].first)&lt;k)</span><br><span class="line">            Dfs(edge[x][i].second,val+edge[x][i].first);</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">    //freopen(&quot;data.txt&quot;,&quot;r&quot;,stdin);</span><br><span class="line">    scanf(&quot;%d %d %d %d&quot;,&amp;n,&amp;m,&amp;a,&amp;k);</span><br><span class="line">    for(int i=1;i&lt;=m;i++)&#123;</span><br><span class="line">        int op,ed,val;</span><br><span class="line">        scanf(&quot;%d %d %d&quot;,&amp;op,&amp;ed,&amp;val);</span><br><span class="line">        edge[op].push_back(make_pair(val,ed));</span><br><span class="line">        edge[ed].push_back(make_pair(val,op));</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i=1;i&lt;=a;i++)&#123;</span><br><span class="line">        int number;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;number);</span><br><span class="line">        Dfs(number,0);</span><br><span class="line">        printf(&quot;%d\n&quot;,n-ans.size());</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/24/%E5%BB%BA%E9%80%A0%E5%9F%BA%E5%9C%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -232,6 +421,79 @@ No Answer<br />
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/24/%E6%A3%8B%E7%9B%98%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="SteinGate">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SteinGate's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/24/%E6%A3%8B%E7%9B%98%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-24 10:47:23 / 修改时间：11:03:07" itemprop="dateCreated datePublished" datetime="2022-08-24T10:47:23+08:00">2022-08-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>棋盘问题</p>
+<p>总的来说，我能想到的解法有两种</p>
+<ol>
+<li>枚举坐标点和长宽（只要确定左上角的坐标和长宽，就能确定一个长方形）</li>
+<li>数学方法</li>
+</ol>
+<hr />
+<p>第一种方法实在没试过，所以没有代码，但附一份假想代码（不一定正确）</p>
+<h2 id="-code0-"><a class="markdownIt-Anchor" href="#-code0-"></a> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//长方形</span><br><span class="line">for(int i=1;i&lt;=n;i++)</span><br><span class="line">    for(int j=1;j&lt;=m;j++)&#123;</span><br><span class="line">        if(i==j) continue;</span><br><span class="line">        for(int k=1;k&lt;=n-i+1;k++)</span><br><span class="line">            for(int l=1;l&lt;=m-j+1;l++)</span><br><span class="line">                cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">printf(&quot;%d&quot;,cnt);           </span><br></pre></td></tr></table></figure></h2>
+<p>第二种方法其实就是第一种的简化版……<br />
+因为第一种方法的后两层循环其实是个累赘，用一个表达式就能算出来</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>n</mi><mi>t</mi><mo>+</mo><mo>=</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>∗</mo><mo stretchy="false">(</mo><mi>m</mi><mo>−</mo><mi>j</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">cnt+=(n-i+1)*(m-j+1)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69841em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord">+</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span></span></p>
+<p>代码如下所示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using  namespace std;</span><br><span class="line">int Ans1,Ans2;</span><br><span class="line">int main()&#123;</span><br><span class="line">    int n,m;</span><br><span class="line">    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);</span><br><span class="line">    for(int i=1;i&lt;=min(n,m);i++)//正方形</span><br><span class="line">        Ans1+=(n-i+1)*(m-i+1);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)//长方形</span><br><span class="line">        for(int j=1;j&lt;=m;j++)</span><br><span class="line">            Ans2+=(n-i+1)*(m-j+1);</span><br><span class="line">    printf(&quot;%d %d&quot;,Ans1,Ans2-Ans1);//Ans2-Ans1是因为要去除重复部分</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
 
@@ -298,7 +560,7 @@ No Answer<br />
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
